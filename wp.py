@@ -70,6 +70,7 @@ h1 { font-size: 42px !important; }
 
 st.title("SPK Mengidentifikasi Mahasiswa Berisiko Drop Out Menggunakan Metode WP")
 df = pd.read_csv("dataset.csv")
+# konfigurasi kriteria
 with st.sidebar:
     st.subheader("Konfigurasi Kriteria WP🔧")
     
