@@ -168,7 +168,7 @@ V = S / np.sum(S)
 
 hasil = df.copy()
 hasil["Nilai WP"] = V
-hasil = hasil.sort_values(by="Nilai WP", ascending=False)
+hasil = hasil.sort_values(by="Nilai WP", ascending=True)
 hasil["Ranking"] = range(1, len(hasil)+1)
 hasil["Mahasiswa"] = [
     f"MHS-{str(i+1).zfill(5)}" for i in hasil.index
@@ -250,16 +250,37 @@ with tab3:
         ["Semua", "Risiko Tinggi", "Risiko Sedang", "Risiko Rendah"],
         horizontal=True
     )
+    
+    filter_target = st.radio(
+        "Filter Status Mahasiswa:",
+        ["Semua", "Dropout", "Enrolled", "Graduate"],
+        horizontal=True
+    )
+        
+    dfilter = hasil.copy()
+
+    # filter target
+    if filter_target != "Semua":
+        dfilter = dfilter[dfilter["Target"] == filter_target]
+
+    # filter kategori
+    if filter_kat != "Semua":
+        dfilter = dfilter[dfilter["Kategori"] == filter_kat]
 
     if filter_kat == "Semua":
-        top3_tinggi = hasil[hasil["Kategori"] == "Risiko Tinggi"].head(3)
-        top3_sedang = hasil[hasil["Kategori"] == "Risiko Sedang"].head(3)
-        top3_rendah = hasil[hasil["Kategori"] == "Risiko Rendah"].head(3)
-        tampil = pd.concat([top3_tinggi, top3_sedang, top3_rendah])[
+        top3_tinggi = dfilter[dfilter["Kategori"] == "Risiko Tinggi"].head(3)
+        top3_sedang = dfilter[dfilter["Kategori"] == "Risiko Sedang"].head(3)
+        top3_rendah = dfilter[dfilter["Kategori"] == "Risiko Rendah"].head(3)
+
+        tampil = pd.concat([
+            top3_tinggi,
+            top3_sedang,
+            top3_rendah
+        ])[
             ["Ranking", "Mahasiswa", "Nilai WP", "Kategori", "Target"]
         ].reset_index(drop=True)
     else:
-        tampil = hasil[hasil["Kategori"] == filter_kat].head(10)[
+        tampil = dfilter.head(10)[
             ["Ranking", "Mahasiswa", "Nilai WP", "Kategori", "Target"]
         ].reset_index(drop=True)
 
