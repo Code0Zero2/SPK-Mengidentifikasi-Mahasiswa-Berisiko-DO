@@ -188,7 +188,7 @@ def kategori(v):
 hasil["Kategori"] = hasil["Nilai WP"].apply(kategori)
 
 # tanpilan
-tab1, tab2, tab3 = st.tabs(["Dataset", "WP", "rangking"])
+tab1, tab2, tab3 = st.tabs(["Dataset", "WP", "Ranking"])
 with tab1:
     st.subheader("Dataset")
     st.dataframe(df)
