@@ -95,7 +95,7 @@ V = S / np.sum(S)
 
 hasil = df.copy()
 hasil["Nilai WP"] = V
-hasil = hasil.sort_values(by="Nilai WP", ascending=False)
+hasil = hasil.sort_values(by="Nilai WP", ascending=True)
 hasil["Ranking"] = range(1, len(hasil)+1)
 hasil["Mahasiswa"] = [
     f"MHS-{str(i+1).zfill(5)}" for i in hasil.index
